@@ -6,13 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class RekamMedis extends Model
 {
-    public function pasien()
-    {
-        return $this->belongsTo(Pasien::class);
-    }
+    protected $fillable = [
+        'kunjungan_id', 
+        'pasien_id', 
+        'dokter_id', 
+        'anamnesis',
+        'pemeriksaan_fisik', 
+        'tekanan_darah', 
+        'suhu', 
+        'nadi',
+        'respirasi', 
+        'berat_badan', 
+        'diagnosis', 
+        'kode_icd',
+        'tindakan', 
+        'catatan'
+    ];
 
-    public function dokter()
-    {
-        return $this->belongsTo(Dokter::class);
-    }
+    public function kunjungan() { return $this->belongsTo(Kunjungan::class); }
+    public function pasien()    { return $this->belongsTo(Pasien::class); }
+    public function dokter()    { return $this->belongsTo(User::class, 'dokter_id'); }
+    public function reseps()    { return $this->hasMany(ResepObat::class); }
 }
