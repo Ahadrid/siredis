@@ -19,6 +19,7 @@ class KunjunganController extends Controller
 
     public function create()
     {
+        $kunjungans = Kunjungan::all();
         $pasiens  = Pasien::orderBy('nama')->get();
         $dokters  = User::role('dokter')->orderBy('name')->get();
         return view('kunjungan.create', compact('pasiens', 'dokters'));

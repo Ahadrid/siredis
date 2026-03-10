@@ -30,10 +30,10 @@ class PasienController extends Controller
             'nama'           => 'required|string|max:100',
             'jenis_kelamin'  => 'required|in:L,P',
             'tanggal_lahir'  => 'required|date',
-            'nik'            => 'nullable|digits:16|unique:pasiens',
+            'nik'            => 'nullable|digits:16|unique:pasien',
             'no_hp'          => 'nullable|string|max:15',
             'alamat'         => 'nullable|string',
-            'golongan_darah' => 'required|in:A,B,AB,O,?',
+            'golongan_darah' => 'nullable|in:A,B,AB,O',
             'riwayat_alergi' => 'nullable|string',
         ]);
 
@@ -61,7 +61,7 @@ class PasienController extends Controller
             'nama'           => 'required|string|max:100',
             'jenis_kelamin'  => 'required|in:L,P',
             'tanggal_lahir'  => 'required|date',
-            'nik'            => 'nullable|digits:16|unique:pasiens,nik,' . $pasien->id,
+            'nik'            => 'nullable|digits:16|unique:pasien,nik,' . $pasien->id,
             'no_hp'          => 'nullable|string|max:15',
             'alamat'         => 'nullable|string',
             'golongan_darah' => 'required|in:A,B,AB,O,?',

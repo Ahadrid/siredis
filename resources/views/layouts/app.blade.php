@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
+        [x-cloak] {
+            display: none !important;
+        }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         .sidebar-link { @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white transition-all duration-150 text-sm font-medium; }
@@ -94,7 +97,7 @@
         {{-- User Info --}}
         <div class="px-3 py-4 border-t border-white/10">
             <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white/5">
-                <div class="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-slate-900 font-bold text-xs flex-shrink-0">
+                <div class="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-slate-900 font-bold text-xs shrink-0">
                     {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
                 </div>
                 <div class="flex-1 min-w-0">
@@ -126,19 +129,61 @@
         </header>
 
         {{-- Alerts --}}
-        <div class="px-6 pt-4">
+        <div class="fixed top-5 right-5 z-50 space-y-3 w-80">
+            {{-- SUCCESS --}}
             @if(session('success'))
-            <div class="flex items-center gap-3 px-4 py-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg text-sm mb-2">
-                <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                {{ session('success') }}
+            <div 
+                x-data="{ show:true }"
+                x-init="setTimeout(() => show=false, 3500)"
+                x-show="show"
+                x-transition:enter="transform ease-out duration-300"
+                x-transition:enter-start="translate-x-10 opacity-0"
+                x-transition:enter-end="translate-x-0 opacity-100"
+                x-transition:leave="transform ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+
+                class="flex items-center gap-3 px-4 py-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg text-sm shadow-lg"
+            >
+                <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+
+                <span class="flex-1">
+                    {{ session('success') }}
+                </span>
+
+                <button @click="show=false" class="text-slate-400 hover:text-slate-700">
+                    ✕
+                </button>
             </div>
             @endif
+
+
+            {{-- ERROR --}}
             @if(session('error'))
-            <div class="flex items-center gap-3 px-4 py-3 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm mb-2">
-                <svg class="w-4 h-4 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
-                {{ session('error') }}
+            <div 
+                x-data="{ show:true }"
+                x-init="setTimeout(() => show=false, 4000)"
+                x-show="show"
+                x-transition
+
+                class="flex items-center gap-3 px-4 py-3 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm shadow-lg"
+            >
+                <svg class="w-4 h-4 text-red-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"/>
+                </svg>
+
+                <span class="flex-1">
+                    {{ session('error') }}
+                </span>
+
+                <button @click="show=false" class="text-slate-400 hover:text-slate-700">
+                    ✕
+                </button>
             </div>
             @endif
+
         </div>
 
         {{-- Page Content --}}
@@ -153,5 +198,6 @@
 </div>
 
 @stack('scripts')
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 </html>

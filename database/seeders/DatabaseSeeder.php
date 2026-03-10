@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // ✅ 1. Jalankan RolePermissionSeeder DULU sebelum assignRole
         $this->call([
             RolePermissionSeeder::class,
+            ObatSeeder::class,
         ]);
 
         // ✅ 2. Gunakan config() bukan env() langsung

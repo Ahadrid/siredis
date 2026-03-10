@@ -51,7 +51,7 @@
                 <tr class="hover:bg-slate-50/50 transition {{ $user->id === auth()->id() ? 'bg-teal-50/30' : '' }}">
                     <td class="px-5 py-3.5">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-xs flex-shrink-0">
+                            <div class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-xs shrink-0">
                                 {{ strtoupper(substr($user->name, 0, 2)) }}
                             </div>
                             <div>

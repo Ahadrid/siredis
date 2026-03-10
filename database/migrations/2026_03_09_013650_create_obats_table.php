@@ -15,6 +15,8 @@ return new class extends Migration
            $table->id();
             $table->string('kode_obat')->unique();
             $table->string('nama_obat');
+            $table->string('kategori');
+            $table->text('deskripsi');
             $table->string('satuan');           // tablet, kapsul, ml, dll
             $table->integer('stok')->default(0);
             $table->decimal('harga', 10, 2)->default(0);
