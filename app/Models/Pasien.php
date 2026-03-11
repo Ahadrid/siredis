@@ -41,11 +41,16 @@ class Pasien extends Model
     {
         $last = static::withTrashed()->latest()->first();
         $next = $last ? ((int) substr($last->no_rm, 2)) + 1 : 1;
-        return 'RM' . str_pad($next, 6, '0', STR_PAD_LEFT);
+        return 'RM-' . str_pad($next, 6, '0', STR_PAD_LEFT);
     }
 
     public function getUmurAttribute(): int
     {
         return $this->tanggal_lahir->age;
+    }
+
+    public function getTanggalLahirIndoAttribute(): string
+    {
+        return $this->tanggal_lahir->translatedFormat('d-M-Y');
     }
 }

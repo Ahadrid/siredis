@@ -10,19 +10,19 @@ class PasienController extends Controller
     public function index(Request $request)
     {
         $pasiens = Pasien::when($request->search, function ($q) use ($request) {
-                        $q->where('nama', 'like', "%{$request->search}%")
-                          ->orWhere('no_rm', 'like', "%{$request->search}%")
-                          ->orWhere('nik', 'like', "%{$request->search}%");
+                        $q->where('nama', 'ilike', "%{$request->search}%")
+                          ->orWhere('no_rm', 'ilike', "%{$request->search}%")
+                          ->orWhere('nik', 'ilike', "%{$request->search}%");
                     })
-                    ->latest()->paginate(15);
+                    ->latest()->paginate(5);
 
         return view('pasien.index', compact('pasiens'));
     }
 
-    public function create()
-    {
-        return view('pasien.create');
-    }
+    // public function create()
+    // {
+    //     return view('pasien.create');
+    // }
 
     public function store(Request $request)
     {
@@ -47,12 +47,12 @@ class PasienController extends Controller
     public function show(Pasien $pasien)
     {
         $pasien->load(['kunjungans.rekamMedis', 'rekamMedis.dokter']);
-        return view('pasien.show', compact('pasien'));
+        return response()->json($pasien);
     }
 
     public function edit(Pasien $pasien)
     {
-        return view('pasien.edit', compact('pasien'));
+        return response()->json($pasien);
     }
 
     public function update(Request $request, Pasien $pasien)
@@ -64,7 +64,7 @@ class PasienController extends Controller
             'nik'            => 'nullable|digits:16|unique:pasien,nik,' . $pasien->id,
             'no_hp'          => 'nullable|string|max:15',
             'alamat'         => 'nullable|string',
-            'golongan_darah' => 'required|in:A,B,AB,O,?',
+            'golongan_darah' => 'nullable|in:A,B,AB,O',
             'riwayat_alergi' => 'nullable|string',
         ]);
 
