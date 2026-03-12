@@ -26,5 +26,5 @@ class RekamMedis extends Model
     public function kunjungan() { return $this->belongsTo(Kunjungan::class); }
     public function pasien()    { return $this->belongsTo(Pasien::class); }
     public function dokter()    { return $this->belongsTo(User::class, 'dokter_id'); }
-    public function reseps()    { return $this->hasMany(ResepObat::class); }
+    public function resep()    { return $this->hasMany(ResepObat::class); }
 }

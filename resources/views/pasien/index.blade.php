@@ -160,15 +160,7 @@
                 </tbody>
             </table>
         </div>
-
-        @if($pasiens->hasPages())
-        <div class="px-5 py-3 border-t border-slate-100 flex items-center justify-between">
-            <p class="text-xs text-slate-500">
-                Menampilkan {{ $pasiens->firstItem() }}–{{ $pasiens->lastItem() }} dari {{ $pasiens->total() }} pasien
-            </p>
-            {{ $pasiens->withQueryString()->links('vendor.pagination.tailwind') }}
-        </div>
-        @endif
+        <x-pagination :paginator="$pasiens" label="pasien" />
     </div>  
     @include('pasien.partials.create-modal')                                            
     @include('pasien.partials.show-modal')                                            

@@ -17,18 +17,18 @@ class KunjunganController extends Controller
         return view('kunjungan.index', compact('kunjungans'));
     }
 
-    public function create()
-    {
-        $kunjungans = Kunjungan::all();
-        $pasiens  = Pasien::orderBy('nama')->get();
-        $dokters  = User::role('dokter')->orderBy('name')->get();
-        return view('kunjungan.create', compact('pasiens', 'dokters'));
-    }
+    // public function create()
+    // {
+    //     $kunjungans = Kunjungan::all();
+    //     $pasiens  = Pasien::orderBy('nama')->get();
+    //     $dokters  = User::role('dokter')->orderBy('name')->get();
+    //     return view('kunjungan.create', compact('pasiens', 'dokters'));
+    // }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'pasien_id'          => 'required|exists:pasiens,id',
+            'pasien_id'          => 'required|exists:pasien,id',
             'dokter_id'          => 'required|exists:users,id',
             'tanggal_kunjungan'  => 'required|date',
             'keluhan'            => 'required|string',
@@ -44,7 +44,7 @@ class KunjunganController extends Controller
     public function show(Kunjungan $kunjungan)
     {
         $kunjungan->load('pasien', 'dokter', 'rekamMedis.reseps.obat');
-        return view('kunjungan.show', compact('kunjungan'));
+        return response()->json($kunjungan);
     }
 
     public function updateStatus(Request $request, Kunjungan $kunjungan)

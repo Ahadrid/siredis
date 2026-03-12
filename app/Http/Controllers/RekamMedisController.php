@@ -59,7 +59,7 @@ class RekamMedisController extends Controller
         $this->authorize('create', RekamMedis::class);
 
         $validated = $request->validate([
-            'kunjungan_id'      => 'required|exists:kunjungans,id',
+            'kunjungan_id'      => 'required|exists:kunjungan,id',
             'anamnesis'         => 'required|string',
             'pemeriksaan_fisik' => 'nullable|string',
             'tekanan_darah'     => 'nullable|string|max:20',
@@ -72,7 +72,7 @@ class RekamMedisController extends Controller
             'tindakan'          => 'nullable|string',
             'catatan'           => 'nullable|string',
             'resep'             => 'nullable|array',
-            'resep.*.obat_id'      => 'required|exists:obats,id',
+            'resep.*.obat_id'      => 'required|exists:obat,id',
             'resep.*.jumlah'       => 'required|integer|min:1',
             'resep.*.aturan_pakai' => 'required|string|max:100',
         ]);
@@ -84,6 +84,7 @@ class RekamMedisController extends Controller
             'pasien_id' => $kunjungan->pasien_id,
             'dokter_id' => Auth::id(),
         ]);
+        // dd($rekamMedis);
 
         if (!empty($validated['resep'])) {
             foreach ($validated['resep'] as $item) {

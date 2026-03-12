@@ -25,6 +25,9 @@ Route::middleware(['auth'])->group(function () {
              ->name('kunjungan.status');
     });
 
+    Route::put('/kunjungan/{kunjungan}/status', [KunjunganController::class,'updateStatus'])
+          ->name('kunjungan.updateStatus');
+
     // Rekam Medis
     Route::middleware('permission:lihat rekam medis')
          ->resource('rekam-medis', RekamMedisController::class);
